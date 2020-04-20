@@ -1,4 +1,4 @@
-#Fatter
+# Fatter
 
 It's my first game jam ever :D
 
@@ -15,7 +15,8 @@ You are faster if you are slim, and slower if you are fat, you can fart to loose
 BTW: it's trashy 
 
 
-#Play it localy
-`cd export`
-`python -m http.server`
-open the browser "http://0.0.0.0/8000/index.html"
+# Play it locally
+```
+cd export
+python -m http.server```
+open the browser http://0.0.0.0/8000/index.html
