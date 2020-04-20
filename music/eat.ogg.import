@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/eat.ogg-eb55879ce20915d670715c3a555347be.oggstr"
+
+[deps]
+
+source_file="res://music/eat.ogg"
+dest_files=[ "res://.import/eat.ogg-eb55879ce20915d670715c3a555347be.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

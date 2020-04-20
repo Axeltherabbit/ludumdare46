@@ -8,6 +8,7 @@ onready var World = get_parent()
 onready var Label_Score = $Label_score
 onready var Label_pop = $Label_pop
 onready var Hungerbar = $Hungerbar
+onready var Fart = $Fart
 onready var maxhunger=Hungerbar.max_value
 onready var viewsize = get_viewport().size
 onready var pow_viewsize_y=pow(viewsize.y/2,2)
@@ -20,8 +21,15 @@ var bodytextures= [preload("res://img/body_0.png"),
 				   preload("res://img/body_3.png"),
 				   preload("res://img/body_4.png"),
 				   preload("res://img/body_5.png"),]
-
 var arrowtexture =preload("res://img/arrow.png")
+
+func enemyhit():
+	print("hit")
+	Hungerbar.value-=150
+
+func fart():
+	Fart.farted=true
+	Hungerbar.value-=25
 
 onready var fat_rate = maxhunger/(len(bodytextures)-1)
 var fatspriteindex=0
@@ -57,39 +65,41 @@ func circleintersectionpoint(dist: Vector2,from: Vector2):
 func _draw():
 	for child in World.get_children():
 		#loops on World's children with a food child only
-		var food = child.get_node_or_null("./food")
-		if food !=null:
+		if child.has_node("./food"):
+			var food = child.get_node("./food")
 			var from =to_local(position)
 			var to = to_local(food.get_global_position())
 			var dist=Vector2((from.x-to.x),(from.y-to.y))
 			
 			if  pow(dist.x,2)+pow(dist.y,2) > pow_viewsize_y:
 				var point=circleintersectionpoint(dist,from)
-				arrowtexture.rotation_degree(0)
 				draw_texture(arrowtexture,point)
-				#draw_circle(point,5,red)
 
 func _input(event):
 	movement=Vector2()
 	movement.x+= int(Input.is_key_pressed(KEY_D))-int(Input.is_key_pressed(KEY_A))
 	movement.y+= int(Input.is_key_pressed(KEY_S))-int(Input.is_key_pressed(KEY_W))
 	movement=movement.normalized()
-	
+	if Input.is_key_pressed(KEY_SPACE):
+		fart()
+
 var restarttext="\n\n\n\n\n\n\n\nPress R to restart"	
-func _physics_process(delta):
+func _process(delta):
+	update()
+	updatefat()
 	if Hungerbar.value == 0:
-		Label_pop.set_text("You died of hunger\nScore : "+Label_Score.text+restarttext)
+		Label_pop.set_text("You died of starvation\nScore : "+Label_Score.text+restarttext)
 		Label_pop.show()
 		get_tree().paused = true
 	elif Hungerbar.value == maxhunger:
-		Label_pop.set_text("You're body exploded of fat\nScore : "+Label_Score.text+restarttext)
+		Label_pop.set_text("You died of obesity\nScore : "+Label_Score.text+restarttext)
 		Label_pop.show()
-		get_tree().paused = true
-		
+		get_tree().paused = true	
+	
+func _physics_process(delta):
 	speed = maxhunger-Hungerbar.value
-	move_and_collide(delta*speed*movement)
-	update()
-	updatefat()
+	var collisions=move_and_collide(delta*speed*movement)
+	
 
 func _ready():
 	score = 0

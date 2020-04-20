@@ -1,16 +1,18 @@
 extends Area2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
+onready var soundplayer = get_parent().get_node("./soundplayer")
+onready var spawnpoint= get_parent()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	soundplayer.get_stream().loop=false
 
 func _on_food_body_entered(body : KinematicBody2D):
-	body.Hungerbar.value+=randi()%100+100
-	body.updatescore(randi()%10+5)
-	queue_free()
+	if body.name == "pg":
+		body.Hungerbar.value+=randi()%100+100
+		body.updatescore(randi()%10+5)
+		queue_free()
+		spawnpoint.addenemy()
+		if not soundplayer.is_playing():
+			soundplayer.play()
+	
