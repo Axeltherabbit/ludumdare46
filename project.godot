@@ -15,9 +15,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="fattest"
+config/name="Fattest"
 run/main_scene="res://scenes/world.tscn"
-config/icon="res://img/icon.png"
 
 [display]
 
