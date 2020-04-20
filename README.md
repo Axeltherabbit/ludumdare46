@@ -14,6 +14,7 @@ You are faster if you are slim, and slower if you are fat, you can fart to loose
 
 BTW: it's trashy 
 
+https://axeltherabbit.itch.io/fatter
 
 # Play it locally
 ```
